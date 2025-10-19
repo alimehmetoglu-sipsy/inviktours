@@ -6,13 +6,6 @@ import { getStrapiMediaUrl } from '@/lib/strapi';
 export default function HeroSection({ data }: { data: HeroSectionType }) {
   const hasVideo = data.heroVideo?.url;
 
-  // Debug: Log video data
-  console.log('HeroSection data:', {
-    hasVideo,
-    videoUrl: data.heroVideo?.url,
-    fullVideoData: data.heroVideo
-  });
-
   return (
     <div className="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
@@ -29,7 +22,7 @@ export default function HeroSection({ data }: { data: HeroSectionType }) {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover @[480px]:rounded-xl"
                   >
-                    <source src={getStrapiMediaUrl(data.heroVideo.url)} type="video/mp4" />
+                    <source src={getStrapiMediaUrl(data.heroVideo!.url)} type="video/mp4" />
                   </video>
                   {/* Video overlay */}
                   <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/50 @[480px]:rounded-xl" />
