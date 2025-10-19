@@ -1,19 +1,17 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getTourBySlug, getAllTourSlugs } from '@/lib/strapi';
+import { getTourBySlug } from '@/lib/strapi';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentRenderer from '@/components/tour/ContentRenderer';
+
+// Enable ISR with revalidation
+export const revalidate = 3600; // Revalidate every hour
 
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
-}
-
-export async function generateStaticParams() {
-  const slugs = await getAllTourSlugs();
-  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

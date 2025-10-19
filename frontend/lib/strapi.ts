@@ -6,31 +6,38 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
 
 /**
  * Fetch data from Strapi API
+ * Returns null on error to handle build-time gracefully
  */
 async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {},
   params: object = {}
-): Promise<T> {
-  const queryString = qs.stringify(params, {
-    encodeValuesOnly: true,
-  });
+): Promise<T | null> {
+  try {
+    const queryString = qs.stringify(params, {
+      encodeValuesOnly: true,
+    });
 
-  const url = `${STRAPI_URL}/api${endpoint}${queryString ? `?${queryString}` : ''}`;
+    const url = `${STRAPI_URL}/api${endpoint}${queryString ? `?${queryString}` : ''}`;
 
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
+    const res = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch from Strapi: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      console.error(`Failed to fetch from Strapi: ${res.status} ${res.statusText}`);
+      return null;
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error(`Error fetching from Strapi (${endpoint}):`, error);
+    return null;
   }
-
-  return res.json();
 }
 
 /**
@@ -72,7 +79,7 @@ export async function getAllTours(): Promise<Tour[]> {
     }
   );
 
-  return data.data;
+  return data?.data || [];
 }
 
 /**
@@ -119,7 +126,7 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
     }
   );
 
-  return data.data[0] || null;
+  return data?.data?.[0] || null;
 }
 
 /**
@@ -134,7 +141,7 @@ export async function getAllTourSlugs(): Promise<string[]> {
     }
   );
 
-  return data.data.map((tour) => tour.slug);
+  return data?.data?.map((tour) => tour.slug) || [];
 }
 
 /**
@@ -151,99 +158,88 @@ export function getStrapiMediaUrl(url: string): string {
  * Get global settings (navigation, site info, etc.)
  */
 export async function getGlobalSettings(): Promise<Global | null> {
-  try {
-    const data = await fetchAPI<StrapiSingleResponse<Global>>(
-      '/global',
-      { next: { revalidate: 3600 } }, // Cache for 1 hour
-      {
-        populate: '*',
-      }
-    );
+  const data = await fetchAPI<StrapiSingleResponse<Global>>(
+    '/global',
+    { next: { revalidate: 3600 } }, // Cache for 1 hour
+    {
+      populate: '*',
+    }
+  );
 
-    return data.data;
-  } catch (error) {
-    console.error('Failed to fetch global settings:', error);
-    return null;
-  }
+  return data?.data || null;
 }
 
 /**
  * Get tours for listing page (lighter payload)
  */
 export async function getToursForListing(): Promise<TourCard[]> {
-  try {
-    const data = await fetchAPI<StrapiResponse<Tour[]>>(
-      '/tours',
-      { next: { revalidate: 60 } },
-      {
-        populate: {
-          contentSections: {
-            populate: '*',
-          },
+  const data = await fetchAPI<StrapiResponse<Tour[]>>(
+    '/tours',
+    { next: { revalidate: 60 } },
+    {
+      populate: {
+        contentSections: {
+          populate: '*',
         },
-      }
-    );
+      },
+    }
+  );
 
-    // Transform tours to card format
-    return data.data.map((tour) => {
-      const heroSection = tour.contentSections?.find(
-        (section) => section.__component === 'tour.hero-section'
-      ) as unknown as { backgroundImage?: StrapiMedia };
-
-      const infoCardsSection = tour.contentSections?.find(
-        (section) => section.__component === 'tour.info-cards-section'
-      ) as unknown as { cards?: Array<{ label: string; value: string }> };
-
-      const pricingSection = tour.contentSections?.find(
-        (section) => section.__component === 'tour.pricing-section'
-      ) as unknown as { price?: number };
-
-      // Extract duration and difficulty from info cards
-      const durationCard = infoCardsSection?.cards?.find(
-        (card) => card.label === 'Süre'
-      );
-      const difficultyCard = infoCardsSection?.cards?.find(
-        (card) => card.label === 'Zorluk'
-      );
-
-      return {
-        id: tour.id,
-        documentId: tour.documentId,
-        title: tour.title,
-        slug: tour.slug,
-        subtitle: tour.subtitle,
-        heroImage: heroSection?.backgroundImage,
-        price: pricingSection?.price,
-        duration: durationCard?.value,
-        difficulty: difficultyCard?.value,
-      };
-    });
-  } catch (error) {
-    console.error('Failed to fetch tours for listing:', error);
+  if (!data?.data) {
     return [];
   }
+
+  // Transform tours to card format
+  return data.data.map((tour) => {
+    const heroSection = tour.contentSections?.find(
+      (section) => section.__component === 'tour.hero-section'
+    ) as unknown as { backgroundImage?: StrapiMedia };
+
+    const infoCardsSection = tour.contentSections?.find(
+      (section) => section.__component === 'tour.info-cards-section'
+    ) as unknown as { cards?: Array<{ label: string; value: string }> };
+
+    const pricingSection = tour.contentSections?.find(
+      (section) => section.__component === 'tour.pricing-section'
+    ) as unknown as { price?: number };
+
+    // Extract duration and difficulty from info cards
+    const durationCard = infoCardsSection?.cards?.find(
+      (card) => card.label === 'Süre'
+    );
+    const difficultyCard = infoCardsSection?.cards?.find(
+      (card) => card.label === 'Zorluk'
+    );
+
+    return {
+      id: tour.id,
+      documentId: tour.documentId,
+      title: tour.title,
+      slug: tour.slug,
+      subtitle: tour.subtitle,
+      heroImage: heroSection?.backgroundImage,
+      price: pricingSection?.price,
+      duration: durationCard?.value,
+      difficulty: difficultyCard?.value,
+    };
+  });
 }
 
 /**
  * Get home page content
  */
 export async function getHomeContent(): Promise<Home | null> {
-  try {
-    const data = await fetchAPI<HomeResponse>(
-      '/home',
-      { next: { revalidate: 60 } },
-      {
-        populate: {
-          contentSections: {
-            populate: '*',
-          },
+  const data = await fetchAPI<HomeResponse>(
+    '/home',
+    { next: { revalidate: 60 } },
+    {
+      populate: {
+        contentSections: {
+          populate: '*',
         },
-      }
-    );
+      },
+    }
+  );
 
-    return data.data;
-  } catch (error) {
-    console.error('Failed to fetch home content:', error);
-    return null;
-  }
+  return data?.data || null;
 }

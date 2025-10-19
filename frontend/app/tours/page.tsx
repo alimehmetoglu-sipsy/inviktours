@@ -4,6 +4,9 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import TourCard from '@/components/tour/TourCard';
 
+// Enable ISR with revalidation
+export const revalidate = 3600; // Revalidate every hour
+
 export const metadata: Metadata = {
   title: 'Turlar - Inviktours',
   description: 'Doğa turlarımızı keşfedin ve unutulmaz bir yolculuğa çıkın',

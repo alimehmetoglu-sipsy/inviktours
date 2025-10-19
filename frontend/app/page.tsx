@@ -15,6 +15,9 @@ import type {
   CTASection as CTASectionType,
 } from '@/types/home';
 
+// Enable ISR with revalidation
+export const revalidate = 3600; // Revalidate every hour
+
 export const metadata: Metadata = {
   title: 'Inviktours - Doğanın Kalbine Unutulmaz Yolculuklar',
   description: 'Türkiye\'nin en güzel doğa rotalarında profesyonel rehberlik eşliğinde unutulmaz maceralar.',
