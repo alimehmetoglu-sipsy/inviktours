@@ -52,7 +52,7 @@ export async function getAllTours(): Promise<Tour[]> {
         contentSections: {
           on: {
             'tour.hero-section': {
-              populate: ['backgroundImage'],
+              populate: ['backgroundImage', 'heroVideo'],
             },
             'tour.info-cards-section': {
               populate: ['cards'],
@@ -99,7 +99,7 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
         contentSections: {
           on: {
             'tour.hero-section': {
-              populate: ['backgroundImage'],
+              populate: ['backgroundImage', 'heroVideo'],
             },
             'tour.info-cards-section': {
               populate: ['cards'],

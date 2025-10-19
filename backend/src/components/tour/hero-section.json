@@ -20,6 +20,12 @@
       "required": true,
       "allowedTypes": ["images"]
     },
+    "heroVideo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"]
+    },
     "buttonText": {
       "type": "string",
       "default": "Rezervasyon Yap"

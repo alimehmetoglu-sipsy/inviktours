@@ -207,6 +207,7 @@ export interface TourHeroSection extends Struct.ComponentSchema {
       Schema.Attribute.Required;
     buttonText: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Rezervasyon Yap'>;
+    heroVideo: Schema.Attribute.Media<'videos'>;
     subtitle: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };

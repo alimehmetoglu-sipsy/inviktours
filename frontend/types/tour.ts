@@ -55,6 +55,7 @@ export interface HeroSection {
   title: string;
   subtitle: string;
   backgroundImage: StrapiMedia;
+  heroVideo?: StrapiMedia;
   buttonText: string;
 }
 
