@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "homes",
+  "info": {
+    "singularName": "home",
+    "pluralName": "homes",
+    "displayName": "Home Page",
+    "description": "Homepage content and sections"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "contentSections": {
+      "type": "dynamiczone",
+      "components": [
+        "home.hero-section",
+        "home.stats-section",
+        "home.featured-tours-section",
+        "home.features-section",
+        "home.cta-section"
+      ]
+    }
+  }
+}

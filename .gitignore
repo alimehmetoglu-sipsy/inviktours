@@ -49,3 +49,17 @@ backend/public/uploads
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude code
+.claude/
+.playwright-mcp/
+
+# database backups
+backend/.tmp_backup*/
+*.backup
+backend/.env.postgres_backup
+
+# utility scripts
+create-*.js
+set-permissions.js
+nul

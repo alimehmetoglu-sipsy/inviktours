@@ -1,6 +1,6 @@
-# InvikTours - Next.js + Strapi
+# 🏔️ Inviktours - Doğa Turları Platformu
 
-Bu proje Next.js (frontend) ve Strapi (backend) kullanarak oluşturulmuş bir web uygulamasıdır.
+Next.js 15 + Strapi 5 ile geliştirilmiş modern bir doğa turları web uygulaması.
 
 ## Proje Yapısı
 

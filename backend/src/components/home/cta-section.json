@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_home_cta_sections",
+  "info": {
+    "displayName": "CTA Section",
+    "description": "Call-to-action section with icon, title, description, and button"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "default": "explore"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Hemen Keşfet"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "/tours"
+    },
+    "buttonIcon": {
+      "type": "string",
+      "default": "arrow_forward"
+    }
+  }
+}

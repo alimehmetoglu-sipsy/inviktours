@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_tour_timeline_sections",
+  "info": {
+    "displayName": "Timeline Section",
+    "description": "Tour program timeline"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Tur Programı"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tour.timeline-item",
+      "required": true,
+      "min": 1
+    }
+  }
+}

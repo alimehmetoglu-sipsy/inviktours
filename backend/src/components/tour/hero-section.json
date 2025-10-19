@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_tour_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Main hero section with background image"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "required": true
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Rezervasyon Yap"
+    }
+  }
+}

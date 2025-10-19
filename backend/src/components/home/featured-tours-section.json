@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_home_featured_tours_sections",
+  "info": {
+    "displayName": "Featured Tours Section",
+    "description": "Featured tours section with title, subtitle, and tour count"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Öne Çıkan Turlar"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "En popüler doğa rotalarımızı keşfedin"
+    },
+    "numberOfTours": {
+      "type": "integer",
+      "default": 3,
+      "min": 1,
+      "max": 12
+    },
+    "viewAllButtonText": {
+      "type": "string",
+      "default": "Tüm Turları Gör"
+    },
+    "viewAllButtonUrl": {
+      "type": "string",
+      "default": "/tours"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_tour_info_cards_sections",
+  "info": {
+    "displayName": "Info Cards Section",
+    "description": "Section displaying tour information cards"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "tour.info-card",
+      "required": true,
+      "min": 1
+    }
+  }
+}

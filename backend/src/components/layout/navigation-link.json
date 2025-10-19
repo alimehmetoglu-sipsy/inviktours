@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_layout_navigation_links",
+  "info": {
+    "displayName": "Navigation Link",
+    "description": "A single navigation menu item"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "isExternal": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

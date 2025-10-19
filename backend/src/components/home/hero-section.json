@@ -1,0 +1,54 @@
+{
+  "collectionName": "components_home_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Homepage hero section with title, subtitle, and CTAs"
+  },
+  "options": {},
+  "attributes": {
+    "badgeText": {
+      "type": "string",
+      "default": "Doğa ile Bütünleşin"
+    },
+    "badgeIcon": {
+      "type": "string",
+      "default": "eco"
+    },
+    "title": {
+      "type": "text",
+      "required": true
+    },
+    "highlightedText": {
+      "type": "string",
+      "default": "Yolculuklar"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "primaryButtonText": {
+      "type": "string",
+      "default": "Turları Keşfet"
+    },
+    "primaryButtonUrl": {
+      "type": "string",
+      "default": "/tours"
+    },
+    "primaryButtonIcon": {
+      "type": "string",
+      "default": "arrow_forward"
+    },
+    "secondaryButtonText": {
+      "type": "string",
+      "default": "Daha Fazla Bilgi"
+    },
+    "secondaryButtonUrl": {
+      "type": "string",
+      "default": "#features"
+    },
+    "secondaryButtonIcon": {
+      "type": "string",
+      "default": "expand_more"
+    }
+  }
+}

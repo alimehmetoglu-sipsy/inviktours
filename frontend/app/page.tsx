@@ -1,103 +1,109 @@
-import Image from "next/image";
+import { Metadata } from 'next';
+import { getHomeContent, getToursForListing } from '@/lib/strapi';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import HeroSection from '@/components/home/HeroSection';
+import StatsSection from '@/components/home/StatsSection';
+import FeaturedToursSection from '@/components/home/FeaturedToursSection';
+import FeaturesSection from '@/components/home/FeaturesSection';
+import CTASection from '@/components/home/CTASection';
+import type {
+  HeroSection as HeroSectionType,
+  StatsSection as StatsSectionType,
+  FeaturedToursSection as FeaturedToursSectionType,
+  FeaturesSection as FeaturesSectionType,
+  CTASection as CTASectionType,
+} from '@/types/home';
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+export const metadata: Metadata = {
+  title: 'Inviktours - Doğanın Kalbine Unutulmaz Yolculuklar',
+  description: 'Türkiye\'nin en güzel doğa rotalarında profesyonel rehberlik eşliğinde unutulmaz maceralar.',
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default async function HomePage() {
+  const homeContent = await getHomeContent();
+  const tours = await getToursForListing();
+
+  // If no content from Strapi, show a message
+  if (!homeContent || !homeContent.contentSections) {
+    return (
+      <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <div className="layout-container flex h-full grow flex-col">
+          <Navbar />
+          <main className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold mb-4">Ana Sayfa İçeriği Yükleniyor</h1>
+              <p className="text-gray-600">Lütfen Strapi admin panelinden ana sayfa içeriğini oluşturun.</p>
+            </div>
+          </main>
+          <Footer />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+      <div className="layout-container flex h-full grow flex-col">
+        <Navbar />
+
+        <main className="flex-1">
+          {homeContent.contentSections
+            .filter((section) => section.__component !== 'home.stats-section')
+            .map((section, index) => {
+              switch (section.__component) {
+                case 'home.hero-section':
+                  return (
+                    <div key={`hero-${index}`}>
+                      <HeroSection section={section as HeroSectionType} toursCount={tours.length} />
+                      {/* Find and render stats section right after hero */}
+                      {homeContent.contentSections
+                        ?.find((s) => s.__component === 'home.stats-section')
+                        && (
+                          <div className="relative -mt-20 px-4 md:px-10 lg:px-40 flex flex-1 justify-center z-20">
+                            <StatsSection
+                              section={homeContent.contentSections.find((s) => s.__component === 'home.stats-section') as StatsSectionType}
+                              toursCount={tours.length}
+                            />
+                          </div>
+                        )
+                      }
+                    </div>
+                  );
+
+                case 'home.featured-tours-section':
+                  return (
+                    <FeaturedToursSection
+                      key={`featured-tours-${index}`}
+                      section={section as FeaturedToursSectionType}
+                      tours={tours}
+                    />
+                  );
+
+                case 'home.features-section':
+                  return (
+                    <FeaturesSection
+                      key={`features-${index}`}
+                      section={section as FeaturesSectionType}
+                    />
+                  );
+
+                case 'home.cta-section':
+                  return (
+                    <CTASection
+                      key={`cta-${index}`}
+                      section={section as CTASectionType}
+                    />
+                  );
+
+                default:
+                  return null;
+              }
+            })}
+        </main>
+
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,47 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "singularName": "global",
+    "pluralName": "globals",
+    "displayName": "Global",
+    "description": "Global site settings including navigation, logo, and site information"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "Inviktours"
+    },
+    "siteDescription": {
+      "type": "text",
+      "default": "Doğanın kalbine unutulmaz bir yolculuk"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "navigationLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "layout.navigation-link"
+    },
+    "contactButtonText": {
+      "type": "string",
+      "default": "İletişim"
+    },
+    "contactButtonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "footerText": {
+      "type": "string",
+      "default": "© 2025 Inviktours. Tüm hakları saklıdır."
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_home_stats_sections",
+  "info": {
+    "displayName": "Stats Section",
+    "description": "Statistics section with multiple stat items"
+  },
+  "options": {},
+  "attributes": {
+    "stats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.stat-item"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_home_features_sections",
+  "info": {
+    "displayName": "Features Section",
+    "description": "Features section with title, subtitle, and feature items"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Neden Inviktours?"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Doğa turlarında güvenilir tercihiniz"
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.feature-item"
+    }
+  }
+}
