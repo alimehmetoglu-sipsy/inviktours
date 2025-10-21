@@ -141,7 +141,7 @@ export interface StrapiResponse<T> {
 
 export interface StrapiSingleResponse<T> {
   data: T;
-  meta: {};
+  meta: object;
 }
 
 // Navigation Link type
