@@ -15,11 +15,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    turbo: {
-      root: process.cwd(),
-    },
+  turbopack: {
+    root: process.cwd(),
   },
+  outputFileTracingRoot: process.cwd(),
 };
 
 export default nextConfig;
