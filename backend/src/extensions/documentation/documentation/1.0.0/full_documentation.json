@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-10-21T08:41:11.199Z"
+    "x-generation-date": "2025-10-21T08:59:11.456Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -3169,9 +3169,6 @@
                 "documentId": {
                   "type": "string"
                 },
-                "title": {
-                  "type": "string"
-                },
                 "slug": {
                   "type": "string"
                 },
@@ -3346,6 +3343,9 @@
                       "tour.contact-form-section": "#/components/schemas/TourContactFormSectionComponent"
                     }
                   }
+                },
+                "title": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -6471,9 +6471,6 @@
           "data": {
             "type": "object",
             "properties": {
-              "title": {
-                "type": "string"
-              },
               "slug": {
                 "type": "string"
               },
@@ -6538,6 +6535,9 @@
                     "tour.contact-form-section": "#/components/schemas/TourContactFormSectionComponent"
                   }
                 }
+              },
+              "title": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -6604,9 +6604,6 @@
           "documentId": {
             "type": "string"
           },
-          "title": {
-            "type": "string"
-          },
           "slug": {
             "type": "string"
           },
@@ -6637,9 +6634,6 @@
                       "type": "number"
                     },
                     "documentId": {
-                      "type": "string"
-                    },
-                    "title": {
                       "type": "string"
                     },
                     "slug": {
@@ -6706,6 +6700,9 @@
                           "tour.contact-form-section": "#/components/schemas/TourContactFormSectionComponent"
                         }
                       }
+                    },
+                    "title": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -6900,6 +6897,9 @@
                 "tour.contact-form-section": "#/components/schemas/TourContactFormSectionComponent"
               }
             }
+          },
+          "title": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
