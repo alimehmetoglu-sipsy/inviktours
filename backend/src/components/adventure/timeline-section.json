@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_adventure_timeline_sections",
+  "info": {
+    "displayName": "Timeline Section",
+    "description": "Adventure program timeline"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Macera Programı"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adventure.timeline-item",
+      "required": true,
+      "min": 1
+    }
+  }
+}

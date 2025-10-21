@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adventures",
+  "info": {
+    "singularName": "adventure",
+    "pluralName": "adventures",
+    "displayName": "Adventure",
+    "description": "Adventure listings with dynamic content sections"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "contentSections": {
+      "type": "dynamiczone",
+      "components": [
+        "adventure.hero-section",
+        "adventure.info-cards-section",
+        "adventure.timeline-section",
+        "adventure.gallery-section",
+        "adventure.pricing-section",
+        "adventure.contact-form-section"
+      ]
+    }
+  }
+}

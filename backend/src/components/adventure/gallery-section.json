@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_adventure_gallery_sections",
+  "info": {
+    "displayName": "Gallery Section",
+    "description": "Photo gallery section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Fotoğraf Galerisi"
+    },
+    "images": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adventure.gallery-image",
+      "required": true,
+      "min": 1
+    }
+  }
+}

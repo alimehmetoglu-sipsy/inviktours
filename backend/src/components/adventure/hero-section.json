@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_adventure_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Main hero section with background image"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "required": true
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "heroVideo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"]
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Rezervasyon Yap"
+    }
+  }
+}

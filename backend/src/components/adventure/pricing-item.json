@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_adventure_pricing_items",
+  "info": {
+    "displayName": "Pricing Item",
+    "description": "List item for included/excluded features"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "isIncluded": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

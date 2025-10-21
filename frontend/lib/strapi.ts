@@ -1,5 +1,6 @@
 import qs from 'qs';
 import type { Tour, StrapiResponse, StrapiSingleResponse, Global, TourCard, StrapiMedia } from '@/types/tour';
+import type { Adventure, AdventureCard } from '@/types/adventure';
 import type { Home, HomeResponse } from '@/types/home';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
@@ -242,4 +243,164 @@ export async function getHomeContent(): Promise<Home | null> {
   );
 
   return data?.data || null;
+}
+
+/**
+ * Get all adventures
+ */
+export async function getAllAdventures(): Promise<Adventure[]> {
+  const data = await fetchAPI<StrapiResponse<Adventure[]>>(
+    '/adventures',
+    { next: { revalidate: 60 } },
+    {
+      populate: {
+        contentSections: {
+          on: {
+            'adventure.hero-section': {
+              populate: ['backgroundImage', 'heroVideo'],
+            },
+            'adventure.info-cards-section': {
+              populate: ['cards'],
+            },
+            'adventure.timeline-section': {
+              populate: ['items'],
+            },
+            'adventure.gallery-section': {
+              populate: {
+                images: {
+                  populate: ['image'],
+                },
+              },
+            },
+            'adventure.pricing-section': {
+              populate: ['includedItems', 'excludedItems'],
+            },
+            'adventure.contact-form-section': {
+              populate: '*',
+            },
+          },
+        },
+      },
+    }
+  );
+
+  return data?.data || [];
+}
+
+/**
+ * Get a single adventure by slug
+ */
+export async function getAdventureBySlug(slug: string): Promise<Adventure | null> {
+  const data = await fetchAPI<StrapiResponse<Adventure[]>>(
+    '/adventures',
+    { next: { revalidate: 60 } },
+    {
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+      populate: {
+        contentSections: {
+          on: {
+            'adventure.hero-section': {
+              populate: ['backgroundImage', 'heroVideo'],
+            },
+            'adventure.info-cards-section': {
+              populate: ['cards'],
+            },
+            'adventure.timeline-section': {
+              populate: ['items'],
+            },
+            'adventure.gallery-section': {
+              populate: {
+                images: {
+                  populate: ['image'],
+                },
+              },
+            },
+            'adventure.pricing-section': {
+              populate: ['includedItems', 'excludedItems'],
+            },
+            'adventure.contact-form-section': {
+              populate: '*',
+            },
+          },
+        },
+      },
+    }
+  );
+
+  return data?.data?.[0] || null;
+}
+
+/**
+ * Get all adventure slugs for static generation
+ */
+export async function getAllAdventureSlugs(): Promise<string[]> {
+  const data = await fetchAPI<StrapiResponse<Adventure[]>>(
+    '/adventures',
+    { next: { revalidate: 60 } },
+    {
+      fields: ['slug'],
+    }
+  );
+
+  return data?.data?.map((adventure) => adventure.slug) || [];
+}
+
+/**
+ * Get adventures for listing page (lighter payload)
+ */
+export async function getAdventuresForListing(): Promise<AdventureCard[]> {
+  const data = await fetchAPI<StrapiResponse<Adventure[]>>(
+    '/adventures',
+    { next: { revalidate: 60 } },
+    {
+      populate: {
+        contentSections: {
+          populate: '*',
+        },
+      },
+    }
+  );
+
+  if (!data?.data) {
+    return [];
+  }
+
+  // Transform adventures to card format
+  return data.data.map((adventure) => {
+    const heroSection = adventure.contentSections?.find(
+      (section) => section.__component === 'adventure.hero-section'
+    ) as unknown as { backgroundImage?: StrapiMedia };
+
+    const infoCardsSection = adventure.contentSections?.find(
+      (section) => section.__component === 'adventure.info-cards-section'
+    ) as unknown as { cards?: Array<{ label: string; value: string }> };
+
+    const pricingSection = adventure.contentSections?.find(
+      (section) => section.__component === 'adventure.pricing-section'
+    ) as unknown as { price?: number };
+
+    // Extract duration and difficulty from info cards
+    const durationCard = infoCardsSection?.cards?.find(
+      (card) => card.label === 'Süre'
+    );
+    const difficultyCard = infoCardsSection?.cards?.find(
+      (card) => card.label === 'Zorluk'
+    );
+
+    return {
+      id: adventure.id,
+      documentId: adventure.documentId,
+      title: adventure.title,
+      slug: adventure.slug,
+      subtitle: adventure.subtitle,
+      heroImage: heroSection?.backgroundImage,
+      price: pricingSection?.price,
+      duration: durationCard?.value,
+      difficulty: difficultyCard?.value,
+    };
+  });
 }
