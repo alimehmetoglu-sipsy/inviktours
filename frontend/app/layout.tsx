@@ -34,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="tr" className="light">
       <head>
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
           rel="stylesheet"
