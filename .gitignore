@@ -63,3 +63,7 @@ backend/.env.postgres_backup
 create-*.js
 set-permissions.js
 nul
+create-*.sh
+create-*.md
+create-*.txt
+tour-payload.json
