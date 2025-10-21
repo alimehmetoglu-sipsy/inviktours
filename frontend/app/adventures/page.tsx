@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getAdventuresForListing } from '@/lib/strapi';
+import { AdventureCard as AdventureCardType } from '@/types/adventure';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AdventureCard from '@/components/adventure/AdventureCard';
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdventuresPage() {
-  let adventures;
+  let adventures: AdventureCardType[];
   try {
     adventures = await getAdventuresForListing();
   } catch (error) {
