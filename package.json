@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.12.2",
     "form-data": "^4.0.4"
   }
