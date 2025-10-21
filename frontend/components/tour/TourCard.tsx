@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { TourCard as TourCardType } from '@/types/tour';
 import { getStrapiMediaUrl } from '@/lib/strapi';
 
@@ -18,61 +17,74 @@ export default function TourCard({ tour }: TourCardProps) {
     });
   };
 
-  return (
-    <Link
-      href={`/tours/${tour.slug}`}
-      className="group flex flex-col rounded-xl overflow-hidden border border-[#dce5dc] dark:border-gray-700 bg-white dark:bg-background-dark/50 hover:shadow-lg transition-shadow"
-    >
-      {/* Tour Image */}
-      <div className="relative h-64 overflow-hidden bg-[#dce5dc] dark:bg-gray-800">
-        {tour.heroImage ? (
-          <Image
-            src={getStrapiMediaUrl(tour.heroImage.url)}
-            alt={tour.heroImage.alternativeText || tour.title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-[#638863] dark:text-gray-400">
-            <span className="material-symbols-outlined text-6xl">landscape</span>
-          </div>
-        )}
+  const calculateDuration = () => {
+    if (!tour.startDate || !tour.endDate) return null;
+    const start = new Date(tour.startDate);
+    const end = new Date(tour.endDate);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 1;
+  };
 
-        {/* Price Badge */}
-        {tour.price && (
-          <div className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-lg font-bold">
-            {formatPrice(tour.price)} {tour.currency || 'TRY'}
-          </div>
-        )}
+  const duration = calculateDuration();
+  const backgroundImage = tour.heroImage
+    ? getStrapiMediaUrl(tour.heroImage.url)
+    : '/images/placeholder-tour.jpg';
+
+  return (
+    <div className="group flex flex-col rounded-xl overflow-hidden border border-[#dce5dc] dark:border-gray-700 bg-white dark:bg-background-dark/50 hover:shadow-lg transition-all duration-300">
+      {/* Tour Image with Background */}
+      <div
+        className="relative h-72 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
       </div>
 
       {/* Tour Info */}
       <div className="flex flex-col flex-1 p-6">
+        {/* Duration */}
+        {duration && (
+          <div className="text-[#638863] dark:text-gray-400 text-sm font-semibold uppercase tracking-wide mb-3">
+            {duration} Günlük Tur
+          </div>
+        )}
+
+        {/* Trip Title */}
         <h3 className="text-[#111811] dark:text-white text-xl font-bold leading-tight mb-2 group-hover:text-primary transition-colors">
           {tour.title}
         </h3>
 
-        {tour.subtitle && (
-          <p className="text-[#638863] dark:text-gray-400 text-sm mb-4 line-clamp-2">
-            {tour.subtitle}
+        {/* Departure Date */}
+        {tour.startDate && (
+          <p className="text-[#638863] dark:text-gray-400 text-sm mb-4 flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">calendar_today</span>
+            <span>Başlangıç: {formatDate(tour.startDate)}</span>
           </p>
         )}
 
-        {/* Tour Details */}
-        <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
-          {(tour.startDate || tour.endDate) && (
-            <div className="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
-              <span className="material-symbols-outlined text-base">calendar_month</span>
-              <span>
-                {tour.startDate && formatDate(tour.startDate)}
-                {tour.startDate && tour.endDate && ' - '}
-                {tour.endDate && formatDate(tour.endDate)}
-              </span>
+        {/* Price and CTA Row */}
+        <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
+          {/* Price */}
+          {tour.price && (
+            <div className="flex flex-col">
+              <span className="text-[#638863] dark:text-gray-400 text-xs mb-1">Kişi Başı</span>
+              <div className="text-primary font-bold text-2xl">
+                {formatPrice(tour.price)} {tour.currency || 'TRY'}
+              </div>
             </div>
           )}
+
+          {/* CTA Button */}
+          <Link
+            href={`/tours/${tour.slug}`}
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-sm"
+          >
+            Detayları Gör
+          </Link>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
