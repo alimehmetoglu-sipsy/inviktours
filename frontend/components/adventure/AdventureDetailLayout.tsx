@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Adventure } from '@/types/adventure';
 import { getStrapiMediaUrl } from '@/lib/strapi';
 import OverviewTab from './OverviewTab';
@@ -44,10 +45,12 @@ export default function AdventureDetailLayout({ adventure }: AdventureDetailLayo
       {/* Main Image */}
       {adventure.mainImage && (
         <div className="w-full h-[400px] md:h-[500px] relative overflow-hidden">
-          <img
+          <Image
             src={getStrapiMediaUrl(adventure.mainImage.url)}
             alt={adventure.mainImage.alternativeText || adventure.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
         </div>
       )}

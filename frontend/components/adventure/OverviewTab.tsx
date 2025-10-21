@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Adventure } from '@/types/adventure';
 import { getStrapiMediaUrl } from '@/lib/strapi';
 import TripAttributesSection from './TripAttributesSection';
@@ -44,12 +45,13 @@ export default function OverviewTab({ adventure }: OverviewTabProps) {
                 key={image.id || index}
                 className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer"
               >
-                <img
+                <Image
                   src={getStrapiMediaUrl(image.url)}
                   alt={image.alternativeText || `${adventure.title} - ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                {index === 4 && adventure.images.length > 5 && (
+                {index === 4 && adventure.images && adventure.images.length > 5 && (
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                     <span className="text-white text-2xl font-bold">
                       +{adventure.images.length - 5}
