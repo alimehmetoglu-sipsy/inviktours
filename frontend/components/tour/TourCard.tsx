@@ -44,46 +44,48 @@ export default function TourCard({ tour }: TourCardProps) {
 
       {/* Tour Info */}
       <div className="flex flex-col flex-1 p-6">
-        {/* Duration */}
-        {duration && (
-          <div className="text-[#638863] dark:text-gray-400 text-sm font-semibold uppercase tracking-wide mb-3">
-            {duration} Günlük Tur
+        {/* Trip Title */}
+        <Link href={`/tours/${tour.slug}`}>
+          <h3 className="text-[#111811] dark:text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors cursor-pointer hover:underline">
+            {tour.title}
+          </h3>
+        </Link>
+
+        {/* Duration and Date in Single Row */}
+        {(duration || tour.startDate) && (
+          <div className="flex items-center gap-4 text-sm mb-4 flex-wrap">
+            {duration && (
+              <div className="flex items-center gap-1.5 text-[#638863] dark:text-gray-400">
+                <span className="material-symbols-outlined text-base">schedule</span>
+                <span className="font-medium">{duration} Gün</span>
+              </div>
+            )}
+            {tour.startDate && (
+              <div className="flex items-center gap-1.5 text-[#638863] dark:text-gray-400">
+                <span className="material-symbols-outlined text-base">calendar_today</span>
+                <span className="font-medium">{formatDate(tour.startDate)}</span>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Trip Title */}
-        <h3 className="text-[#111811] dark:text-white text-xl font-bold leading-tight mb-2 group-hover:text-primary transition-colors">
-          {tour.title}
-        </h3>
-
-        {/* Departure Date */}
-        {tour.startDate && (
-          <p className="text-[#638863] dark:text-gray-400 text-sm mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base">calendar_today</span>
-            <span>Başlangıç: {formatDate(tour.startDate)}</span>
-          </p>
+        {/* Price */}
+        {tour.price && (
+          <div className="flex flex-col mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
+            <span className="text-[#638863] dark:text-gray-400 text-xs mb-1">Kişi Başı</span>
+            <div className="text-primary font-bold text-2xl mb-4">
+              {formatPrice(tour.price)} {tour.currency || 'TRY'}
+            </div>
+          </div>
         )}
 
-        {/* Price and CTA Row */}
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
-          {/* Price */}
-          {tour.price && (
-            <div className="flex flex-col">
-              <span className="text-[#638863] dark:text-gray-400 text-xs mb-1">Kişi Başı</span>
-              <div className="text-primary font-bold text-2xl">
-                {formatPrice(tour.price)} {tour.currency || 'TRY'}
-              </div>
-            </div>
-          )}
-
-          {/* CTA Button */}
-          <Link
-            href={`/tours/${tour.slug}`}
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-sm"
-          >
-            Detayları Gör
-          </Link>
-        </div>
+        {/* CTA Button - Full Width */}
+        <Link
+          href={`/tours/${tour.slug}`}
+          className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-sm text-center w-full block mt-2"
+        >
+          Detayları Gör
+        </Link>
       </div>
     </div>
   );
