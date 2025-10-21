@@ -77,7 +77,7 @@ export default async function HomePage() {
                 case 'home.featured-tours-section':
                   return (
                     <FeaturedToursSection
-                      key={section.id}
+                      key={`featured-tours-${section.id}`}
                       section={section as FeaturedToursSectionType}
                       tours={tours}
                     />
@@ -86,7 +86,7 @@ export default async function HomePage() {
                 case 'home.features-section':
                   return (
                     <FeaturesSection
-                      key={section.id}
+                      key={`features-${section.id}`}
                       section={section as FeaturesSectionType}
                     />
                   );
@@ -94,7 +94,7 @@ export default async function HomePage() {
                 case 'home.cta-section':
                   return (
                     <CTASection
-                      key={section.id}
+                      key={`cta-${section.id}`}
                       section={section as CTASectionType}
                     />
                   );
