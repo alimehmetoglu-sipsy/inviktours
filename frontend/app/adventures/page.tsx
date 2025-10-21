@@ -13,7 +13,13 @@ export const metadata: Metadata = {
 };
 
 export default async function AdventuresPage() {
-  const adventures = await getAdventuresForListing();
+  let adventures;
+  try {
+    adventures = await getAdventuresForListing();
+  } catch (error) {
+    console.error('Failed to fetch adventures:', error);
+    adventures = [];
+  }
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
@@ -38,7 +44,7 @@ export default async function AdventuresPage() {
           {/* Adventures Grid */}
           <div className="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-12">
             <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-              {adventures.length === 0 ? (
+              {!adventures || adventures.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center">
                   <span className="material-symbols-outlined text-6xl text-[#638863] dark:text-gray-400 mb-4">
                     explore_off
@@ -47,7 +53,7 @@ export default async function AdventuresPage() {
                     Henüz Macera Bulunmuyor
                   </h2>
                   <p className="text-[#638863] dark:text-gray-400">
-                    Yeni maceralar çok yakında eklenecek!
+                    Strapi admin panelinden Adventures için public erişim iznini kontrol edin.
                   </p>
                 </div>
               ) : (
