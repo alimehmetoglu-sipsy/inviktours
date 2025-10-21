@@ -53,11 +53,11 @@ export default async function HomePage() {
         <main className="flex-1">
           {homeContent.contentSections
             .filter((section) => section.__component !== 'home.stats-section')
-            .map((section, index) => {
+            .map((section) => {
               switch (section.__component) {
                 case 'home.hero-section':
                   return (
-                    <div key={`hero-${index}`}>
+                    <div key={`hero-${section.id}`}>
                       <HeroSection section={section as HeroSectionType} toursCount={tours.length} />
                       {/* Find and render stats section right after hero */}
                       {homeContent.contentSections
@@ -77,7 +77,7 @@ export default async function HomePage() {
                 case 'home.featured-tours-section':
                   return (
                     <FeaturedToursSection
-                      key={`featured-tours-${index}`}
+                      key={section.id}
                       section={section as FeaturedToursSectionType}
                       tours={tours}
                     />
@@ -86,7 +86,7 @@ export default async function HomePage() {
                 case 'home.features-section':
                   return (
                     <FeaturesSection
-                      key={`features-${index}`}
+                      key={section.id}
                       section={section as FeaturesSectionType}
                     />
                   );
@@ -94,7 +94,7 @@ export default async function HomePage() {
                 case 'home.cta-section':
                   return (
                     <CTASection
-                      key={`cta-${index}`}
+                      key={section.id}
                       section={section as CTASectionType}
                     />
                   );

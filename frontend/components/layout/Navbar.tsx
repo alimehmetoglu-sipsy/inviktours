@@ -46,10 +46,10 @@ export default async function Navbar() {
           </Link>
           <div className="hidden md:flex flex-1 justify-end gap-8">
             <div className="flex items-center gap-9">
-              {sortedLinks.map((link, index) => (
+              {sortedLinks.map((link) => (
                 link.isExternal ? (
                   <a
-                    key={`nav-${link.label}-${index}`}
+                    key={link.id}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -59,7 +59,7 @@ export default async function Navbar() {
                   </a>
                 ) : (
                   <Link
-                    key={`nav-${link.label}-${index}`}
+                    key={link.id}
                     href={link.url}
                     className="text-[#111811] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors"
                   >

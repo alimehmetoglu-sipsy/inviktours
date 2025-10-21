@@ -21,9 +21,9 @@ export default function FeaturesSection({ section }: FeaturesSectionProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedFeatures.map((feature, index) => (
+          {sortedFeatures.map((feature) => (
             <div
-              key={`feature-${feature.title}-${index}`}
+              key={feature.id}
               className="flex flex-col items-center text-center p-6 rounded-xl bg-white dark:bg-background-dark/50 border border-[#dce5dc] dark:border-gray-700 hover:border-primary transition-all hover:shadow-lg"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
