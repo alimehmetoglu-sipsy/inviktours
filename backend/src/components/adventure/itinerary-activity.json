@@ -20,6 +20,15 @@
     "icon": {
       "type": "string",
       "default": "place"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "distance": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
     }
   }
 }

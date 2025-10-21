@@ -71,7 +71,7 @@ export default function OverviewTab({ adventure }: OverviewTabProps) {
             Program Özeti
           </h2>
           <div className="space-y-4">
-            {adventure.itinerary.slice(0, 5).map((day) => (
+            {adventure.itinerary.map((day) => (
               <div
                 key={day.id}
                 className="border-l-4 border-primary pl-4 py-2"
@@ -87,11 +87,6 @@ export default function OverviewTab({ adventure }: OverviewTabProps) {
                 <p className="text-[#111811] dark:text-white">{day.summary}</p>
               </div>
             ))}
-            {adventure.itinerary.length > 5 && (
-              <p className="text-[#638863] dark:text-gray-400 italic">
-                ... ve {adventure.itinerary.length - 5} gün daha
-              </p>
-            )}
           </div>
         </div>
       )}

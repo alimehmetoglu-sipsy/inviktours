@@ -111,9 +111,12 @@ export interface AdventureItineraryActivity extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
+    distance: Schema.Attribute.String;
+    duration: Schema.Attribute.String;
     icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'place'>;
     isOptional: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    price: Schema.Attribute.String;
   };
 }
 
