@@ -13,16 +13,29 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "slug": {
-      "type": "uid",
-      "targetField": "title",
-      "required": true
+      "type": "uid"
     },
-    "subtitle": {
-      "type": "string"
+    "adventure": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::adventure.adventure",
+      "inversedBy": "tours"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string",
+      "default": "TRY"
     },
     "contentSections": {
       "type": "dynamiczone",

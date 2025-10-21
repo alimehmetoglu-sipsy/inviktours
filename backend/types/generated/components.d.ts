@@ -1,5 +1,175 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AdventureContactFormSection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_contact_form_sections';
+  info: {
+    description: 'Reservation and contact form section';
+    displayName: 'Contact Form Section';
+  };
+  attributes: {
+    buttonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'G\u00F6nder'>;
+    emailLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'E-posta Adresi'>;
+    messageLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Mesaj\u0131n\u0131z'>;
+    nameLabel: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Ad Soyad'>;
+    phoneLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Telefon Numaras\u0131'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Rezervasyon Yap\u0131n veya Soru Sorun'>;
+  };
+}
+
+export interface AdventureGalleryImage extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_gallery_images';
+  info: {
+    description: 'Single image for the adventure gallery';
+    displayName: 'Gallery Image';
+  };
+  attributes: {
+    alt: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventureGallerySection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_gallery_sections';
+  info: {
+    description: 'Photo gallery section';
+    displayName: 'Gallery Section';
+  };
+  attributes: {
+    images: Schema.Attribute.Component<'adventure.gallery-image', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Foto\u011Fraf Galerisi'>;
+  };
+}
+
+export interface AdventureHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_hero_sections';
+  info: {
+    description: 'Main hero section with background image';
+    displayName: 'Hero Section';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    buttonText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Rezervasyon Yap'>;
+    heroVideo: Schema.Attribute.Media<'videos'>;
+    subtitle: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventureInfoCard extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_info_cards';
+  info: {
+    description: 'Information card with icon, label and value';
+    displayName: 'Info Card';
+  };
+  attributes: {
+    icon: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'calendar_month'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventureInfoCardsSection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_info_cards_sections';
+  info: {
+    description: 'Section displaying adventure information cards';
+    displayName: 'Info Cards Section';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'adventure.info-card', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+  };
+}
+
+export interface AdventurePricingItem extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_pricing_items';
+  info: {
+    description: 'List item for included/excluded features';
+    displayName: 'Pricing Item';
+  };
+  attributes: {
+    isIncluded: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    text: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventurePricingSection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_pricing_sections';
+  info: {
+    description: 'Adventure pricing and included/excluded items';
+    displayName: 'Pricing Section';
+  };
+  attributes: {
+    excludedItems: Schema.Attribute.Component<'adventure.pricing-item', true>;
+    excludedTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Fiyata Dahil Olmayanlar'>;
+    includedItems: Schema.Attribute.Component<'adventure.pricing-item', true>;
+    includedTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Fiyata Dahil Olanlar'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Fiyatland\u0131rma'>;
+  };
+}
+
+export interface AdventureTimelineItem extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_timeline_items';
+  info: {
+    description: 'A single day in the adventure timeline';
+    displayName: 'Timeline Item';
+  };
+  attributes: {
+    day: Schema.Attribute.String & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'hiking'>;
+  };
+}
+
+export interface AdventureTimelineSection extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_timeline_sections';
+  info: {
+    description: 'Adventure program timeline';
+    displayName: 'Timeline Section';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'adventure.timeline-item', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Macera Program\u0131'>;
+  };
+}
+
 export interface HomeCtaSection extends Struct.ComponentSchema {
   collectionName: 'components_home_cta_sections';
   info: {
@@ -322,6 +492,16 @@ export interface TourTimelineSection extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'adventure.contact-form-section': AdventureContactFormSection;
+      'adventure.gallery-image': AdventureGalleryImage;
+      'adventure.gallery-section': AdventureGallerySection;
+      'adventure.hero-section': AdventureHeroSection;
+      'adventure.info-card': AdventureInfoCard;
+      'adventure.info-cards-section': AdventureInfoCardsSection;
+      'adventure.pricing-item': AdventurePricingItem;
+      'adventure.pricing-section': AdventurePricingSection;
+      'adventure.timeline-item': AdventureTimelineItem;
+      'adventure.timeline-section': AdventureTimelineSection;
       'home.cta-section': HomeCtaSection;
       'home.feature-item': HomeFeatureItem;
       'home.featured-tours-section': HomeFeaturedToursSection;

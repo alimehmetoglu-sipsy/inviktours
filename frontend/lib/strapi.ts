@@ -97,6 +97,37 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
         },
       },
       populate: {
+        adventure: {
+          fields: ['title', 'slug', 'subtitle'],
+          populate: {
+            contentSections: {
+              on: {
+                'adventure.hero-section': {
+                  populate: ['backgroundImage', 'heroVideo'],
+                },
+                'adventure.info-cards-section': {
+                  populate: ['cards'],
+                },
+                'adventure.timeline-section': {
+                  populate: ['items'],
+                },
+                'adventure.gallery-section': {
+                  populate: {
+                    images: {
+                      populate: ['image'],
+                    },
+                  },
+                },
+                'adventure.pricing-section': {
+                  populate: ['includedItems', 'excludedItems'],
+                },
+                'adventure.contact-form-section': {
+                  populate: '*',
+                },
+              },
+            },
+          },
+        },
         contentSections: {
           on: {
             'tour.hero-section': {
@@ -179,8 +210,17 @@ export async function getToursForListing(): Promise<TourCard[]> {
     { next: { revalidate: 60 } },
     {
       populate: {
-        contentSections: {
-          populate: '*',
+        adventure: {
+          fields: ['title', 'subtitle'],
+          populate: {
+            contentSections: {
+              on: {
+                'adventure.hero-section': {
+                  populate: ['backgroundImage'],
+                },
+              },
+            },
+          },
         },
       },
     }
@@ -192,36 +232,22 @@ export async function getToursForListing(): Promise<TourCard[]> {
 
   // Transform tours to card format
   return data.data.map((tour) => {
-    const heroSection = tour.contentSections?.find(
-      (section) => section.__component === 'tour.hero-section'
-    ) as unknown as { backgroundImage?: StrapiMedia };
-
-    const infoCardsSection = tour.contentSections?.find(
-      (section) => section.__component === 'tour.info-cards-section'
-    ) as unknown as { cards?: Array<{ label: string; value: string }> };
-
-    const pricingSection = tour.contentSections?.find(
-      (section) => section.__component === 'tour.pricing-section'
-    ) as unknown as { price?: number };
-
-    // Extract duration and difficulty from info cards
-    const durationCard = infoCardsSection?.cards?.find(
-      (card) => card.label === 'Süre'
-    );
-    const difficultyCard = infoCardsSection?.cards?.find(
-      (card) => card.label === 'Zorluk'
-    );
+    // Get adventure hero image
+    const adventureHeroSection = tour.adventure?.contentSections?.find(
+      (section) => section.__component === 'adventure.hero-section'
+    ) as { backgroundImage?: StrapiMedia } | undefined;
 
     return {
       id: tour.id,
       documentId: tour.documentId,
-      title: tour.title,
+      title: tour.adventure?.title || 'Tur',
       slug: tour.slug,
-      subtitle: tour.subtitle,
-      heroImage: heroSection?.backgroundImage,
-      price: pricingSection?.price,
-      duration: durationCard?.value,
-      difficulty: difficultyCard?.value,
+      subtitle: tour.adventure?.subtitle,
+      heroImage: adventureHeroSection?.backgroundImage,
+      price: tour.price,
+      startDate: tour.startDate,
+      endDate: tour.endDate,
+      currency: tour.currency,
     };
   });
 }

@@ -113,13 +113,30 @@ export type ContentSection =
   | PricingSection
   | ContactFormSection;
 
-// Main Tour type
-export interface Tour {
+// Adventure type for Tour relation
+export interface TourAdventure {
   id: number;
   documentId: string;
   title: string;
   slug: string;
   subtitle?: string;
+  contentSections?: Array<{
+    id: number;
+    __component: string;
+    [key: string]: any;
+  }>;
+}
+
+// Main Tour type
+export interface Tour {
+  id: number;
+  documentId: string;
+  slug: string;
+  adventure?: TourAdventure;
+  startDate?: string;
+  endDate?: string;
+  price?: number;
+  currency?: string;
   contentSections?: ContentSection[];
   publishedAt: string;
   createdAt: string;
@@ -175,6 +192,7 @@ export interface TourCard {
   subtitle?: string;
   heroImage?: StrapiMedia;
   price?: number;
-  duration?: string;
-  difficulty?: string;
+  startDate?: string;
+  endDate?: string;
+  currency?: string;
 }
