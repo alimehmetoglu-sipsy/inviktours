@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_adventure_contact_form_sections",
+  "info": {
+    "displayName": "Contact Form Section",
+    "description": "Reservation and contact form section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Rezervasyon Yapın veya Soru Sorun"
+    },
+    "nameLabel": {
+      "type": "string",
+      "default": "Ad Soyad"
+    },
+    "emailLabel": {
+      "type": "string",
+      "default": "E-posta Adresi"
+    },
+    "phoneLabel": {
+      "type": "string",
+      "default": "Telefon Numarası"
+    },
+    "messageLabel": {
+      "type": "string",
+      "default": "Mesajınız"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Gönder"
+    }
+  }
+}

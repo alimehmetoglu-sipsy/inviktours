@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_adventure_info_cards_sections",
+  "info": {
+    "displayName": "Info Cards Section",
+    "description": "Section displaying adventure information cards"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adventure.info-card",
+      "required": true,
+      "min": 1
+    }
+  }
+}

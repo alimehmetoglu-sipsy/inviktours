@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_adventure_info_cards",
+  "info": {
+    "displayName": "Info Card",
+    "description": "Information card with icon, label and value"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true,
+      "default": "calendar_month"
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

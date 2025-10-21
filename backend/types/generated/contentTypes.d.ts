@@ -430,6 +430,47 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdventureAdventure extends Struct.CollectionTypeSchema {
+  collectionName: 'adventures';
+  info: {
+    description: 'Adventure listings with dynamic content sections';
+    displayName: 'Adventure';
+    pluralName: 'adventures';
+    singularName: 'adventure';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    contentSections: Schema.Attribute.DynamicZone<
+      [
+        'adventure.hero-section',
+        'adventure.info-cards-section',
+        'adventure.timeline-section',
+        'adventure.gallery-section',
+        'adventure.pricing-section',
+        'adventure.contact-form-section',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adventure.adventure'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -1052,6 +1093,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::adventure.adventure': ApiAdventureAdventure;
       'api::global.global': ApiGlobalGlobal;
       'api::home.home': ApiHomeHome;
       'api::tour.tour': ApiTourTour;

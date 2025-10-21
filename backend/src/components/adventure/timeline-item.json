@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_adventure_timeline_items",
+  "info": {
+    "displayName": "Timeline Item",
+    "description": "A single day in the adventure timeline"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true,
+      "default": "hiking"
+    },
+    "day": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
