@@ -234,15 +234,15 @@ export async function getToursForListing(): Promise<TourCard[]> {
   return data.data.map((tour) => {
     // Get adventure hero image
     const adventureHeroSection = tour.adventure?.contentSections?.find(
-      (section: any) => section.__component === 'adventure.hero-section'
-    ) as any;
+      (section) => section.__component === 'adventure.hero-section'
+    ) as { backgroundImage?: StrapiMedia } | undefined;
 
     return {
       id: tour.id,
       documentId: tour.documentId,
-      title: tour.adventure?.title || tour.title,
+      title: tour.adventure?.title || 'Tur',
       slug: tour.slug,
-      subtitle: tour.adventure?.subtitle || tour.subtitle,
+      subtitle: tour.adventure?.subtitle,
       heroImage: adventureHeroSection?.backgroundImage,
       price: tour.price,
       startDate: tour.startDate,

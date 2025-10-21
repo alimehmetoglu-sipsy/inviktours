@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentRenderer from '@/components/tour/ContentRenderer';
 import AdventureContentRenderer from '@/components/adventure/ContentRenderer';
+import type { ContentSection as AdventureContentSection } from '@/types/adventure';
 
 // Enable ISR with revalidation
 export const revalidate = 3600; // Revalidate every hour
@@ -137,7 +138,7 @@ export default async function TourPage({ params }: PageProps) {
 
           {/* Adventure Content Sections */}
           {tour.adventure?.contentSections && tour.adventure.contentSections.length > 0 && (
-            <AdventureContentRenderer sections={tour.adventure.contentSections as any} />
+            <AdventureContentRenderer sections={tour.adventure.contentSections as AdventureContentSection[]} />
           )}
         </main>
         <Footer />
