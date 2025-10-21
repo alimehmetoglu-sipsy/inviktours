@@ -124,18 +124,12 @@ export interface AdventurePricingSection extends Struct.ComponentSchema {
     displayName: 'Pricing Section';
   };
   attributes: {
-    buttonText: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Rezervasyon Yap'>;
-    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'TL'>;
     excludedItems: Schema.Attribute.Component<'adventure.pricing-item', true>;
     excludedTitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Fiyata Dahil Olmayanlar'>;
     includedItems: Schema.Attribute.Component<'adventure.pricing-item', true>;
     includedTitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Fiyata Dahil Olanlar'>;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    priceLabel: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Ki\u015Fi Ba\u015F\u0131'>;
     title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Fiyatland\u0131rma'>;
   };

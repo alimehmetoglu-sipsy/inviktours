@@ -24,6 +24,12 @@
     "subtitle": {
       "type": "string"
     },
+    "tours": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tour.tour",
+      "mappedBy": "adventure"
+    },
     "contentSections": {
       "type": "dynamiczone",
       "components": [

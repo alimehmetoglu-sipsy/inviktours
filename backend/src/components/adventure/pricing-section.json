@@ -20,29 +20,13 @@
     },
     "includedItems": {
       "type": "component",
-      "repeatable": true,
-      "component": "adventure.pricing-item"
+      "component": "adventure.pricing-item",
+      "repeatable": true
     },
     "excludedItems": {
       "type": "component",
-      "repeatable": true,
-      "component": "adventure.pricing-item"
-    },
-    "price": {
-      "type": "decimal",
-      "required": true
-    },
-    "currency": {
-      "type": "string",
-      "default": "TL"
-    },
-    "priceLabel": {
-      "type": "string",
-      "default": "Kişi Başı"
-    },
-    "buttonText": {
-      "type": "string",
-      "default": "Rezervasyon Yap"
+      "component": "adventure.pricing-item",
+      "repeatable": true
     }
   }
 }

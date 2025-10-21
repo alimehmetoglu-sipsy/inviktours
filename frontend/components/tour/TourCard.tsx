@@ -10,6 +10,14 @@ interface TourCardProps {
 export default function TourCard({ tour }: TourCardProps) {
   const formatPrice = (price: number) => new Intl.NumberFormat('tr-TR').format(price);
 
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('tr-TR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   return (
     <Link
       href={`/tours/${tour.slug}`}
@@ -34,7 +42,7 @@ export default function TourCard({ tour }: TourCardProps) {
         {/* Price Badge */}
         {tour.price && (
           <div className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-lg font-bold">
-            {formatPrice(tour.price)} TL
+            {formatPrice(tour.price)} {tour.currency || 'TRY'}
           </div>
         )}
       </div>
@@ -52,18 +60,15 @@ export default function TourCard({ tour }: TourCardProps) {
         )}
 
         {/* Tour Details */}
-        <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
-          {tour.duration && (
+        <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-[#dce5dc] dark:border-gray-700">
+          {(tour.startDate || tour.endDate) && (
             <div className="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
               <span className="material-symbols-outlined text-base">calendar_month</span>
-              <span>{tour.duration}</span>
-            </div>
-          )}
-
-          {tour.difficulty && (
-            <div className="flex items-center gap-2 text-[#638863] dark:text-gray-400 text-sm">
-              <span className="material-symbols-outlined text-base">hiking</span>
-              <span>{tour.difficulty}</span>
+              <span>
+                {tour.startDate && formatDate(tour.startDate)}
+                {tour.startDate && tour.endDate && ' - '}
+                {tour.endDate && formatDate(tour.endDate)}
+              </span>
             </div>
           )}
         </div>
