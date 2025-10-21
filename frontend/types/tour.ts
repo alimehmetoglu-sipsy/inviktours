@@ -120,6 +120,47 @@ export interface TourAdventure {
   title: string;
   slug: string;
   subtitle?: string;
+  description?: string;
+  duration?: number;
+  startLocation?: string;
+  endLocation?: string;
+  mainImage?: StrapiMedia;
+  images?: StrapiMedia[];
+  tripAttributes?: {
+    id: number;
+    style: string;
+    styleDescription: string;
+    service: string;
+    serviceDescription: string;
+    physical: string;
+    physicalDescription: string;
+    groupType: string;
+    groupTypeDescription: string;
+  };
+  tripInfo?: {
+    id: number;
+    ageRequirement: string;
+    visaRequirement: string;
+    visaLink?: string;
+  };
+  itinerary?: Array<{
+    id: number;
+    dayNumber: number;
+    dayRange?: string;
+    location: string;
+    summary: string;
+    details?: string;
+    activities?: Array<{
+      id: number;
+      name: string;
+      description?: string;
+      isOptional: boolean;
+      icon: string;
+    }>;
+    meals?: string;
+    accommodation?: string;
+    accommodationDetails?: string;
+  }>;
   contentSections?: Array<{
     id: number;
     __component: string;

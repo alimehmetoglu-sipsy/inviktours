@@ -4,8 +4,8 @@ import { getTourBySlug } from '@/lib/strapi';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentRenderer from '@/components/tour/ContentRenderer';
-import AdventureContentRenderer from '@/components/adventure/ContentRenderer';
-import type { ContentSection as AdventureContentSection } from '@/types/adventure';
+import AdventureDetailLayout from '@/components/adventure/AdventureDetailLayout';
+import type { Adventure } from '@/types/adventure';
 
 // Enable ISR with revalidation
 export const revalidate = 3600; // Revalidate every hour
@@ -45,38 +45,16 @@ export default async function TourPage({ params }: PageProps) {
       <div className="layout-container flex h-full grow flex-col">
         <Navbar />
         <main>
+          {/* Tour Content Sections */}
           <ContentRenderer sections={tour.contentSections} />
 
-          {/* Tour Info Section - Adventure, Tarih ve Fiyat Bilgileri */}
-          {(tour.adventure || tour.startDate || tour.endDate || tour.price) && (
-            <section className="px-4 py-16 md:px-8 lg:px-16">
+          {/* Tour-Specific Info (Tarih ve Fiyat) */}
+          {(tour.startDate || tour.endDate || tour.price) && (
+            <section className="px-4 py-12 md:px-8 lg:px-16 bg-gray-50 dark:bg-gray-900">
               <div className="mx-auto max-w-6xl">
                 <div className="rounded-2xl bg-gradient-to-br from-[#111418] to-[#1c2127] p-8 shadow-xl">
                   <h2 className="mb-6 text-3xl font-bold text-white">Tur Bilgileri</h2>
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-                    {/* Adventure Bilgisi */}
-                    {tour.adventure && (
-                      <div className="rounded-lg bg-[#1c2127] p-6">
-                        <div className="mb-2 flex items-center gap-2">
-                          <svg className="h-6 w-6 text-[#FFB800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                          <h3 className="text-lg font-semibold text-[#FFB800]">Macera</h3>
-                        </div>
-                        <p className="text-xl font-bold text-white">{tour.adventure.title}</p>
-                        {tour.adventure.subtitle && (
-                          <p className="mt-1 text-sm text-gray-400">{tour.adventure.subtitle}</p>
-                        )}
-                        <a
-                          href={`/adventures/${tour.adventure.slug}`}
-                          className="mt-3 inline-block text-sm text-[#FFB800] hover:underline"
-                        >
-                          Macera Detaylarını Gör →
-                        </a>
-                      </div>
-                    )}
-
                     {/* Tarih Bilgisi */}
                     {(tour.startDate || tour.endDate) && (
                       <div className="rounded-lg bg-[#1c2127] p-6">
@@ -136,9 +114,9 @@ export default async function TourPage({ params }: PageProps) {
             </section>
           )}
 
-          {/* Adventure Content Sections */}
-          {tour.adventure?.contentSections && tour.adventure.contentSections.length > 0 && (
-            <AdventureContentRenderer sections={tour.adventure.contentSections as AdventureContentSection[]} />
+          {/* Adventure Full Details */}
+          {tour.adventure && (
+            <AdventureDetailLayout adventure={tour.adventure as unknown as Adventure} />
           )}
         </main>
         <Footer />

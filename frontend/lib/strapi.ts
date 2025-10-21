@@ -98,8 +98,16 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
       },
       populate: {
         adventure: {
-          fields: ['title', 'slug', 'subtitle'],
           populate: {
+            mainImage: true,
+            images: true,
+            tripAttributes: true,
+            tripInfo: true,
+            itinerary: {
+              populate: {
+                activities: true,
+              },
+            },
             contentSections: {
               on: {
                 'adventure.hero-section': {
