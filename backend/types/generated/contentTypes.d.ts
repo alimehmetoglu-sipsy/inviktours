@@ -430,60 +430,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAdventureAdventure extends Struct.CollectionTypeSchema {
-  collectionName: 'adventures';
-  info: {
-    description: 'Adventure listings with dynamic content sections';
-    displayName: 'Adventure';
-    pluralName: 'adventures';
-    singularName: 'adventure';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    contentSections: Schema.Attribute.DynamicZone<
-      [
-        'adventure.hero-section',
-        'adventure.info-cards-section',
-        'adventure.timeline-section',
-        'adventure.gallery-section',
-        'adventure.pricing-section',
-        'adventure.contact-form-section',
-      ]
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
-    duration: Schema.Attribute.Integer;
-    endLocation: Schema.Attribute.String;
-    images: Schema.Attribute.Media<'images' | 'videos', true>;
-    itinerary: Schema.Attribute.Component<'adventure.itinerary-day', true>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::adventure.adventure'
-    > &
-      Schema.Attribute.Private;
-    mainImage: Schema.Attribute.Media<'images'>;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    startLocation: Schema.Attribute.String;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    tours: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'>;
-    tripAttributes: Schema.Attribute.Component<
-      'adventure.trip-attributes',
-      false
-    >;
-    tripInfo: Schema.Attribute.Component<'adventure.trip-info', false>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -570,10 +516,6 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    adventure: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::adventure.adventure'
-    >;
     contentSections: Schema.Attribute.DynamicZone<
       [
         'tour.hero-section',
@@ -587,16 +529,13 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'TRY'>;
-    endDate: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'> &
       Schema.Attribute.Private;
-    price: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID;
-    startDate: Schema.Attribute.Date;
-    title: Schema.Attribute.String;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1113,7 +1052,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::adventure.adventure': ApiAdventureAdventure;
       'api::global.global': ApiGlobalGlobal;
       'api::home.home': ApiHomeHome;
       'api::tour.tour': ApiTourTour;
