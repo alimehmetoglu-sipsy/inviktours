@@ -48,6 +48,47 @@ export interface PricingItem {
   isIncluded: boolean;
 }
 
+// New component types for G Adventures style
+export interface TripAttributes {
+  id: number;
+  style: string;
+  styleDescription: string;
+  service: string;
+  serviceDescription: string;
+  physical: string;
+  physicalDescription: string;
+  groupType: string;
+  groupTypeDescription: string;
+}
+
+export interface TripInfo {
+  id: number;
+  ageRequirement: string;
+  visaRequirement: string;
+  visaLink?: string;
+}
+
+export interface ItineraryActivity {
+  id: number;
+  name: string;
+  description?: string;
+  isOptional: boolean;
+  icon: string;
+}
+
+export interface ItineraryDay {
+  id: number;
+  dayNumber: number;
+  dayRange?: string;
+  location: string;
+  summary: string;
+  details?: string;
+  activities?: ItineraryActivity[];
+  meals?: string;
+  accommodation?: string;
+  accommodationDetails?: string;
+}
+
 // Section types (Dynamic Zone components)
 export interface HeroSection {
   id: number;
@@ -120,6 +161,15 @@ export interface Adventure {
   title: string;
   slug: string;
   subtitle?: string;
+  description?: string;
+  duration?: number;
+  startLocation?: string;
+  endLocation?: string;
+  mainImage?: StrapiMedia;
+  images?: StrapiMedia[];
+  tripAttributes?: TripAttributes;
+  tripInfo?: TripInfo;
+  itinerary?: ItineraryDay[];
   contentSections?: ContentSection[];
   publishedAt: string;
   createdAt: string;

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_adventure_trip_info",
+  "info": {
+    "displayName": "Trip Info",
+    "description": "Age requirements and visa information"
+  },
+  "options": {},
+  "attributes": {
+    "ageRequirement": {
+      "type": "text",
+      "required": true
+    },
+    "visaRequirement": {
+      "type": "text",
+      "required": true
+    },
+    "visaLink": {
+      "type": "string"
+    }
+  }
+}

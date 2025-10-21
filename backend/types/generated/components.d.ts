@@ -103,6 +103,42 @@ export interface AdventureInfoCardsSection extends Struct.ComponentSchema {
   };
 }
 
+export interface AdventureItineraryActivity extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_itinerary_activities';
+  info: {
+    description: 'Optional or included activity in the itinerary';
+    displayName: 'Itinerary Activity';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String & Schema.Attribute.DefaultTo<'place'>;
+    isOptional: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventureItineraryDay extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_itinerary_days';
+  info: {
+    description: 'Daily itinerary with location, summary and details';
+    displayName: 'Itinerary Day';
+  };
+  attributes: {
+    accommodation: Schema.Attribute.String;
+    accommodationDetails: Schema.Attribute.Text;
+    activities: Schema.Attribute.Component<
+      'adventure.itinerary-activity',
+      true
+    >;
+    dayNumber: Schema.Attribute.Integer & Schema.Attribute.Required;
+    dayRange: Schema.Attribute.String;
+    details: Schema.Attribute.RichText;
+    location: Schema.Attribute.String & Schema.Attribute.Required;
+    meals: Schema.Attribute.String;
+    summary: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 export interface AdventurePricingItem extends Struct.ComponentSchema {
   collectionName: 'components_adventure_pricing_items';
   info: {
@@ -167,6 +203,37 @@ export interface AdventureTimelineSection extends Struct.ComponentSchema {
       >;
     title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Macera Program\u0131'>;
+  };
+}
+
+export interface AdventureTripAttributes extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_trip_attributes';
+  info: {
+    description: 'Trip style, service level, physical rating and group type';
+    displayName: 'Trip Attributes';
+  };
+  attributes: {
+    groupType: Schema.Attribute.String & Schema.Attribute.Required;
+    groupTypeDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    physical: Schema.Attribute.String & Schema.Attribute.Required;
+    physicalDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    service: Schema.Attribute.String & Schema.Attribute.Required;
+    serviceDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    style: Schema.Attribute.Text & Schema.Attribute.Required;
+    styleDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface AdventureTripInfo extends Struct.ComponentSchema {
+  collectionName: 'components_adventure_trip_info';
+  info: {
+    description: 'Age requirements and visa information';
+    displayName: 'Trip Info';
+  };
+  attributes: {
+    ageRequirement: Schema.Attribute.Text & Schema.Attribute.Required;
+    visaLink: Schema.Attribute.String;
+    visaRequirement: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
@@ -498,10 +565,14 @@ declare module '@strapi/strapi' {
       'adventure.hero-section': AdventureHeroSection;
       'adventure.info-card': AdventureInfoCard;
       'adventure.info-cards-section': AdventureInfoCardsSection;
+      'adventure.itinerary-activity': AdventureItineraryActivity;
+      'adventure.itinerary-day': AdventureItineraryDay;
       'adventure.pricing-item': AdventurePricingItem;
       'adventure.pricing-section': AdventurePricingSection;
       'adventure.timeline-item': AdventureTimelineItem;
       'adventure.timeline-section': AdventureTimelineSection;
+      'adventure.trip-attributes': AdventureTripAttributes;
+      'adventure.trip-info': AdventureTripInfo;
       'home.cta-section': HomeCtaSection;
       'home.feature-item': HomeFeatureItem;
       'home.featured-tours-section': HomeFeaturedToursSection;

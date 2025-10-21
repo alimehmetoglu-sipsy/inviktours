@@ -327,6 +327,15 @@ export async function getAdventureBySlug(slug: string): Promise<Adventure | null
         },
       },
       populate: {
+        mainImage: true,
+        images: true,
+        tripAttributes: true,
+        tripInfo: true,
+        itinerary: {
+          populate: {
+            activities: true,
+          },
+        },
         contentSections: {
           on: {
             'adventure.hero-section': {

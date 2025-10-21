@@ -455,17 +455,29 @@ export interface ApiAdventureAdventure extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    duration: Schema.Attribute.Integer;
+    endLocation: Schema.Attribute.String;
+    images: Schema.Attribute.Media<'images' | 'videos', true>;
+    itinerary: Schema.Attribute.Component<'adventure.itinerary-day', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::adventure.adventure'
     > &
       Schema.Attribute.Private;
+    mainImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    startLocation: Schema.Attribute.String;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     tours: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'>;
+    tripAttributes: Schema.Attribute.Component<
+      'adventure.trip-attributes',
+      false
+    >;
+    tripInfo: Schema.Attribute.Component<'adventure.trip-info', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

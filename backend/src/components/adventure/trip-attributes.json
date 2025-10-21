@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_adventure_trip_attributes",
+  "info": {
+    "displayName": "Trip Attributes",
+    "description": "Trip style, service level, physical rating and group type"
+  },
+  "options": {},
+  "attributes": {
+    "style": {
+      "type": "text",
+      "required": true
+    },
+    "styleDescription": {
+      "type": "text",
+      "required": true
+    },
+    "service": {
+      "type": "string",
+      "required": true
+    },
+    "serviceDescription": {
+      "type": "text",
+      "required": true
+    },
+    "physical": {
+      "type": "string",
+      "required": true
+    },
+    "physicalDescription": {
+      "type": "text",
+      "required": true
+    },
+    "groupType": {
+      "type": "string",
+      "required": true
+    },
+    "groupTypeDescription": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

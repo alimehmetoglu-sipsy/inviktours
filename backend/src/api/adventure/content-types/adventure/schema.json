@@ -24,6 +24,43 @@
     "subtitle": {
       "type": "string"
     },
+    "description": {
+      "type": "richtext"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "startLocation": {
+      "type": "string"
+    },
+    "endLocation": {
+      "type": "string"
+    },
+    "mainImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "videos"]
+    },
+    "tripAttributes": {
+      "type": "component",
+      "repeatable": false,
+      "component": "adventure.trip-attributes"
+    },
+    "tripInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "adventure.trip-info"
+    },
+    "itinerary": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adventure.itinerary-day"
+    },
     "tours": {
       "type": "relation",
       "relation": "oneToMany",

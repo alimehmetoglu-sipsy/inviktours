@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_adventure_itinerary_days",
+  "info": {
+    "displayName": "Itinerary Day",
+    "description": "Daily itinerary with location, summary and details"
+  },
+  "options": {},
+  "attributes": {
+    "dayNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "dayRange": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "details": {
+      "type": "richtext"
+    },
+    "activities": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adventure.itinerary-activity"
+    },
+    "meals": {
+      "type": "string"
+    },
+    "accommodation": {
+      "type": "string"
+    },
+    "accommodationDetails": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_adventure_itinerary_activities",
+  "info": {
+    "displayName": "Itinerary Activity",
+    "description": "Optional or included activity in the itinerary"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "isOptional": {
+      "type": "boolean",
+      "default": false
+    },
+    "icon": {
+      "type": "string",
+      "default": "place"
+    }
+  }
+}
