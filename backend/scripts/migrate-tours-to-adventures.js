@@ -61,6 +61,15 @@ async function fetchTours() {
   }
 }
 
+function cleanObject(obj) {
+  const cleaned = { ...obj };
+  delete cleaned.id;
+  delete cleaned.createdAt;
+  delete cleaned.updatedAt;
+  delete cleaned.publishedAt;
+  return cleaned;
+}
+
 function transformContentSection(section) {
   if (!section || !section.__component) {
     return null;
@@ -72,71 +81,92 @@ function transformContentSection(section) {
     return null;
   }
 
-  // Create a clean copy without Strapi metadata
+  // Start with component type
   const transformed = {
     __component: newComponent,
-    ...section,
   };
 
-  // Remove Strapi-specific fields
-  delete transformed.id;
-  delete transformed.createdAt;
-  delete transformed.updatedAt;
+  // Handle different component types
+  switch (section.__component) {
+    case 'tour.hero-section':
+      transformed.title = section.title;
+      transformed.subtitle = section.subtitle;
+      transformed.buttonText = section.buttonText;
+      if (section.backgroundImage?.id) {
+        transformed.backgroundImage = section.backgroundImage.id;
+      }
+      if (section.heroVideo?.id) {
+        transformed.heroVideo = section.heroVideo.id;
+      }
+      break;
 
-  // Transform nested components (cards, items, etc.)
-  if (transformed.cards && Array.isArray(transformed.cards)) {
-    transformed.cards = transformed.cards.map(card => {
-      const cleanCard = { ...card };
-      delete cleanCard.id;
-      delete cleanCard.createdAt;
-      delete cleanCard.updatedAt;
-      return cleanCard;
-    });
-  }
+    case 'tour.info-cards-section':
+      if (section.cards && Array.isArray(section.cards)) {
+        transformed.cards = section.cards.map(card => ({
+          icon: card.icon,
+          label: card.label,
+          value: card.value,
+        }));
+      }
+      break;
 
-  if (transformed.items && Array.isArray(transformed.items)) {
-    transformed.items = transformed.items.map(item => {
-      const cleanItem = { ...item };
-      delete cleanItem.id;
-      delete cleanItem.createdAt;
-      delete cleanItem.updatedAt;
-      return cleanItem;
-    });
-  }
+    case 'tour.timeline-section':
+      transformed.title = section.title;
+      if (section.items && Array.isArray(section.items)) {
+        transformed.items = section.items.map(item => ({
+          icon: item.icon,
+          day: item.day,
+          description: item.description,
+        }));
+      }
+      break;
 
-  if (transformed.images && Array.isArray(transformed.images)) {
-    transformed.images = transformed.images.map(img => {
-      const cleanImg = { image: img.image?.id, alt: img.alt };
-      return cleanImg;
-    });
-  }
+    case 'tour.gallery-section':
+      transformed.title = section.title;
+      if (section.images && Array.isArray(section.images)) {
+        transformed.images = section.images.map(img => ({
+          image: img.image?.id || img.image,
+          alt: img.alt,
+        }));
+      }
+      break;
 
-  if (transformed.includedItems && Array.isArray(transformed.includedItems)) {
-    transformed.includedItems = transformed.includedItems.map(item => {
-      const cleanItem = { ...item };
-      delete cleanItem.id;
-      delete cleanItem.createdAt;
-      delete cleanItem.updatedAt;
-      return cleanItem;
-    });
-  }
+    case 'tour.pricing-section':
+      transformed.title = section.title;
+      transformed.includedTitle = section.includedTitle;
+      transformed.excludedTitle = section.excludedTitle;
+      transformed.price = section.price;
+      transformed.currency = section.currency;
+      transformed.priceLabel = section.priceLabel;
+      transformed.buttonText = section.buttonText;
 
-  if (transformed.excludedItems && Array.isArray(transformed.excludedItems)) {
-    transformed.excludedItems = transformed.excludedItems.map(item => {
-      const cleanItem = { ...item };
-      delete cleanItem.id;
-      delete cleanItem.createdAt;
-      delete cleanItem.updatedAt;
-      return cleanItem;
-    });
-  }
+      if (section.includedItems && Array.isArray(section.includedItems)) {
+        transformed.includedItems = section.includedItems.map(item => ({
+          text: item.text,
+          isIncluded: item.isIncluded,
+        }));
+      }
 
-  // Handle media fields (backgroundImage, heroVideo)
-  if (transformed.backgroundImage?.id) {
-    transformed.backgroundImage = transformed.backgroundImage.id;
-  }
-  if (transformed.heroVideo?.id) {
-    transformed.heroVideo = transformed.heroVideo.id;
+      if (section.excludedItems && Array.isArray(section.excludedItems)) {
+        transformed.excludedItems = section.excludedItems.map(item => ({
+          text: item.text,
+          isIncluded: item.isIncluded,
+        }));
+      }
+      break;
+
+    case 'tour.contact-form-section':
+      transformed.title = section.title;
+      transformed.nameLabel = section.nameLabel;
+      transformed.emailLabel = section.emailLabel;
+      transformed.phoneLabel = section.phoneLabel;
+      transformed.messageLabel = section.messageLabel;
+      transformed.buttonText = section.buttonText;
+      break;
+
+    default:
+      console.warn(`Unhandled component type: ${section.__component}`);
+      return null;
   }
 
   return transformed;
